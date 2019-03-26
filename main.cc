@@ -9,12 +9,12 @@ static inline
 Index_t r_map(Index_t i) { return i / NODELETS(); }
 
 static inline
-void test_spawn(Index_t * p)
+void busy_function(volatile Index_t * p)
 {
-    Index_t N = 1024;
-    for (Index_t i = 0; i < N; ++i)
-    {
-        volatile long * x = &i;
+    Index_t sum = 0;
+    Index_t N = 2048;
+    for (long i = 0; i < N; ++i) {
+         sum += *p;
     }
 }
 
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
             Index_t * nodelet_ptr = a[n_map(icol)] + r_map(icol);
             //Index_t * nodelet_ptr = a[n_map(icol)]; // same result
             cilk_migrate_hint(nodelet_ptr);
-            cilk_spawn test_spawn(nodelet_ptr);
+            cilk_spawn busy_function(nodelet_ptr);
         }
         cilk_sync;
     }
