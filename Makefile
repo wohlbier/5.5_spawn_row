@@ -1,4 +1,3 @@
-HDRS = algebra.hh types.hh
 SRCS = main.cc
 EMU_OBJS = $(subst .cc,.emu.o,$(SRCS))
 
@@ -10,12 +9,8 @@ EMU_SIM = $(EMU_PATH)/bin/emusim.x
 EMU_SIM_ARGS = --short_trace
 EMU_PROFILE = $(EMU_PATH)/bin/emusim_profile
 
-EXE  = llt
+EXE  = spawn_row
 EMU_EXE = $(EXE).mwx
-#INPUT = tri-63.tsv
-INPUT = tri-184.tsv
-#INPUT = tri-379.tsv
-#INPUT = tri-994.tsv
 
 $(EMU_EXE) : $(EMU_OBJS)
 	$(EMU_CXX) -o $(EMU_EXE) $(EMU_OBJS) $(LDFLAGS)
@@ -26,7 +21,7 @@ run : $(EMU_EXE)
 profile : $(EMU_EXE)
 	$(EMU_PROFILE) profile $(EMU_SIM_ARGS) -- $(EMU_EXE) $(INPUT)
 
-%.emu.o: %.cc $(HDRS)
+%.emu.o: %.cc
 	$(EMU_CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 .PHONY : clean
