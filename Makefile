@@ -12,14 +12,16 @@ EMU_PROFILE = $(EMU_PATH)/bin/emusim_profile
 EXE  = spawn_row
 EMU_EXE = $(EXE).mwx
 
+reproduce: run profile
+
 $(EMU_EXE) : $(EMU_OBJS)
 	$(EMU_CXX) -o $(EMU_EXE) $(EMU_OBJS) $(LDFLAGS)
 
 run : $(EMU_EXE)
-	$(EMU_SIM) $(EMU_SIM_ARGS) $(EMU_EXE) $(INPUT)
+	$(EMU_SIM) $(EMU_SIM_ARGS) $(EMU_EXE)
 
 profile : $(EMU_EXE)
-	$(EMU_PROFILE) profile $(EMU_SIM_ARGS) -- $(EMU_EXE) $(INPUT)
+	$(EMU_PROFILE) profile $(EMU_SIM_ARGS) -- $(EMU_EXE)
 
 %.emu.o: %.cc
 	$(EMU_CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@

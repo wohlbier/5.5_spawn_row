@@ -11,10 +11,10 @@ Index_t r_map(Index_t i) { return i / NODELETS(); }
 static inline
 void test_spawn(Index_t * p)
 {
-    Index_t Big = 1024;
-    for (Index_t i = 0; i < Big; ++i)
+    Index_t N = 1024;
+    for (Index_t i = 0; i < N; ++i)
     {
-        volatile long * p = &i;
+        volatile long * x = &i;
     }
 }
 
